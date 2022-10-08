@@ -3,4 +3,4 @@
 use Bilions\FakerImages\FakerImageProvider;
 
 include "./vendor/autoload.php";
-echo FakerImageProvider::image('tmp');
+var_dump(FakerImageProvider::image('/tmp'));
