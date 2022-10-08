@@ -1,0 +1,14 @@
+{
+    "name": "bilions/faker-images",
+    "description": "Faker image provider for laravel faker",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bilions\\FakerImages\\": "src/"
+        }
+    },
+    "require": {
+        "fakerphp/faker": "^1.20"
+    }
+}
