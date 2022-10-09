@@ -1,6 +1,6 @@
 {
     "name": "bilions/faker-images",
-    "description": "Faker image provider for laravel faker",
+    "description": "Faker image provider for Laravel faker",
     "type": "library",
     "license": "MIT",
     "autoload": {

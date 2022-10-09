@@ -2,39 +2,50 @@
 
 namespace Bilions\FakerImages;
 
-use Faker\Provider\Base as BaseProvider;
+use Faker\Factory;
+use Faker\Provider\Base;
 
-class FakerImageProvider extends BaseProvider
+class FakerImageProvider extends Base
 {
-    /**
-     * Download a remote image from picsum api to disk and return its filename/path
-     *
-     * Requires curl, or allow_url_fopen to be on in php.ini.
-     *
-     * @example '/path/to/dir/13b73edae8443990be1aa8f1a483bc27.jpg'
-     */
     public static function image(
         string $dir = null,
         int $width = 640,
         int $height = 480,
-        bool $isFullPath = true,
-        int $id = null,
-        bool $randomize = true,
-        bool $gray = false,
-        int $blur = null,
-        string $imageExtension = 'jpg'
+        string $imageExtension = 'png'
     ) {
-        $img = imagecreate($width, $height);
-        $fontcolor = imagecolorallocate($img, 120, 60, 200);
-        imagestring($img, 12, 150, 120, "Demo Text1", $fontcolor);
+        list($r, $g, $b) = self::getBackgroundColor();
+        $image = imagecreate($width, $height);
+        $background = imagecolorallocate($image, $r, $g, $b);
+        $textColor = imagecolorallocate($image, 255, 255, 255);
+        imagecolordeallocate($image, $textColor);
+        imagecolordeallocate($image, $background);
 
-        $dir = $dir === null ? sys_get_temp_dir() : $dir; // GNU/Linux / OS X / Windows compatible
+        $dir = $dir === null ? '/tmp' : $dir;
         $name = md5(uniqid(empty($_SERVER['SERVER_ADDR']) ? '' : $_SERVER['SERVER_ADDR'], true));
         $filename = $name . "." . $imageExtension;
         $filePath = $dir . DIRECTORY_SEPARATOR . $filename;
+        imagejpeg($image, $filePath);
+        return $filePath;
+    }
 
-        // save file
-        file_put_contents($filePath, $img);
-        return $isFullPath ? $filePath : $filename;
+    public static function getText()
+    {
+        $faker = Factory::create();
+        return $faker->word();
+    }
+
+    public static function getBackgroundColor()
+    {
+        $colors = [
+            [235, 64, 52],
+            [235, 156, 52],
+            [235, 229, 52],
+            [147, 235, 52],
+            [52, 235, 168],
+            [52, 122, 235],
+            [177, 52, 235],
+        ];
+        $index = rand(0, count($colors) -1);
+        return $colors[$index];
     }
 }
