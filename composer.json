@@ -3,6 +3,12 @@
     "description": "Faker image provider for Laravel faker",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "AJ",
+            "email": "necessarylion@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Bilions\\FakerImages\\": "src/"
